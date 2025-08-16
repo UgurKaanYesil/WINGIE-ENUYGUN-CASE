@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Enuygun QA Automation Test Suite" verbose="1">
+    <parameter name="browser" value="chrome"/>
+    <parameter name="environment" value="dev"/>
+    
+    <listeners>
+        <listener class-name="org.testng.reporters.XMLReporter"/>
+        <listener class-name="org.testng.reporters.JUnitReportReporter"/>
+    </listeners>
+    
+    <!-- Smoke Tests - High Priority, Quick Execution -->
+    <test name="Smoke Tests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="Smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.enuygun.qa.ui.HomePageTests">
+                <methods>
+                    <include name="testHomePageLoad"/>
+                    <include name="testFlightTabSelection"/>
+                </methods>
+            </class>
+            <class name="com.enuygun.qa.api.FlightApiTests">
+                <methods>
+                    <include name="testApiHealthCheck"/>
+                    <include name="testFlightSearchApi"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- UI Tests - Cross Browser Testing -->
+    <test name="UI Tests - Chrome" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="UI"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.enuygun.qa.ui.HomePageTests"/>
+            <class name="com.enuygun.qa.ui.SearchTests"/>
+        </classes>
+    </test>
+    
+    <test name="UI Tests - Firefox" preserve-order="true" enabled="false">
+        <parameter name="browser" value="firefox"/>
+        <groups>
+            <run>
+                <include name="UI"/>
+                <include name="Smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.enuygun.qa.ui.HomePageTests">
+                <methods>
+                    <include name="testHomePageLoad"/>
+                    <include name="testFlightTabSelection"/>
+                    <include name="testOneWayFlightSearch"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- API Tests -->
+    <test name="API Tests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="API"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.enuygun.qa.api.FlightApiTests"/>
+            <class name="com.enuygun.qa.api.HotelApiTests"/>
+        </classes>
+    </test>
+    
+    <!-- Data Analysis Tests -->
+    <test name="Data Analysis Tests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="Data"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.enuygun.qa.data.DataAnalysisTests"/>
+        </classes>
+    </test>
+    
+    <!-- Regression Tests - Full Suite -->
+    <test name="Regression Tests" preserve-order="true" enabled="false">
+        <groups>
+            <run>
+                <include name="Regression"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.enuygun.qa.ui.HomePageTests"/>
+            <class name="com.enuygun.qa.ui.SearchTests"/>
+            <class name="com.enuygun.qa.api.FlightApiTests"/>
+            <class name="com.enuygun.qa.api.HotelApiTests"/>
+            <class name="com.enuygun.qa.data.DataAnalysisTests"/>
+        </classes>
+    </test>
+</suite>
