@@ -544,32 +544,270 @@ mvn test -Ppetstore-api-tests -Dparallel=classes -DthreadCount=3
 - **Continuous Integration**: Ready for Jenkins/GitHub Actions
 - **Documentation**: Comprehensive inline code documentation
 
-## 🚛 Load Testing with k6
+## 🚛 K6 Load Testing Framework
 
-### Running Load Tests
-```bash
-# Navigate to load test directory
-cd load-tests/k6-scripts
+### Overview
+Comprehensive K6 load testing framework specifically designed for Enuygun.com flight search functionality. Features 1 virtual user configuration with configurable duration, focusing on Istanbul-Ankara flight search performance testing.
 
-# Run flight search load test
-k6 run load-test-flights.js
+### 🎯 Load Test Features
+- **Single Virtual User**: Optimized for basic load testing (1 VU as specified)
+- **Configurable Duration**: Default 5 minutes, customizable via environment variables
+- **Target Focus**: www.enuygun.com flight search functionality
+- **Main Route**: Istanbul (IST) → Ankara (ESB) flight search
+- **Comprehensive Metrics**: Response time, error rate, success rate tracking
+- **HTML Report Generation**: Detailed performance reports with graphs
 
-# Run with custom parameters
-k6 run -e BASE_URL=https://www.enuygun.com -e API_BASE_URL=https://api.enuygun.com load-test-flights.js
-
-# Run performance test
-k6 run performance-test.js
-
-# Run with custom virtual users and duration
-k6 run --vus 20 --duration 5m load-test-flights.js
+### 🏗️ Load Test Structure
+```
+load-tests/
+├── k6-scripts/
+│   ├── flight-search-load-test.js     # Main K6 test script (NEW - Part 3)
+│   ├── load-test-flights.js           # Legacy flight load test
+│   └── performance-test.js            # Legacy performance test
+├── config/
+│   └── load-test-config.json          # Test configuration file
+├── scripts/
+│   └── run-flight-search-load-test.sh # Test execution script
+└── ../load-test-reports/              # Generated test reports
+    ├── flight-search-load-test-report.html
+    └── flight-search-summary.json
 ```
 
-### Load Test Configuration
-Modify the test scripts to adjust:
-- Virtual users (VUs)
-- Test duration
-- Ramp-up patterns
-- Performance thresholds
+### 🎮 Test Scenarios (Part 3 Implementation)
+
+#### 1. Homepage Load Test (20% weight)
+- **Purpose**: Validate homepage loading performance
+- **Metrics**: Response time, availability, content validation
+- **Threshold**: < 3s response time
+
+#### 2. Flight Search Istanbul-Ankara (60% weight) - Main Focus
+- **Route**: Istanbul (IST) → Ankara (ESB)
+- **Alternative Routes**: SAW → ESB, IST → ADB for variety
+- **Flow**: Homepage → Search form → Results validation
+- **Threshold**: < 10s search completion time
+
+#### 3. Flight Listing Performance (20% weight)
+- **Purpose**: Test flight listing page performance
+- **URL Pattern**: `/ucak-bileti/istanbul-ankara`
+- **Metrics**: Page load time, content validation
+- **Threshold**: < 5s response time
+
+### 🚀 Running K6 Load Tests
+
+#### Quick Start with Shell Script
+```bash
+# Navigate to scripts directory
+cd enuygun-qa-automation/load-tests/scripts
+
+# Run with default settings (1 VU, 5 minutes)
+./run-flight-search-load-test.sh
+
+# Run with custom duration
+./run-flight-search-load-test.sh -d 10m
+
+# Run with verbose output
+./run-flight-search-load-test.sh -v -d 2m
+```
+
+#### Direct K6 Execution
+```bash
+# Navigate to k6 scripts directory
+cd load-tests/k6-scripts
+
+# Run main flight search load test
+k6 run flight-search-load-test.js
+
+# Run with custom duration
+DURATION=10m k6 run flight-search-load-test.js
+
+# Run with custom configuration
+DURATION=5m BASE_URL=https://www.enuygun.com k6 run flight-search-load-test.js
+```
+
+#### Environment-Specific Testing
+```bash
+# Staging environment
+./run-flight-search-load-test.sh -e staging -d 3m
+
+# Custom URL testing
+./run-flight-search-load-test.sh --url https://test.enuygun.com -d 2m
+
+# Production with extended duration
+./run-flight-search-load-test.sh -e production -d 15m
+```
+
+### ⚙️ Configuration Options
+
+#### Shell Script Parameters
+```bash
+# Available options:
+-d, --duration DURATION      # Test duration (default: 5m)
+-u, --url URL               # Base URL (default: https://www.enuygun.com)
+-e, --env ENVIRONMENT       # Environment (production|staging|dev)
+-t, --timeout TIMEOUT       # Request timeout in ms (default: 30000)
+--think-time-min MIN        # Min think time in seconds (default: 2)
+--think-time-max MAX        # Max think time in seconds (default: 5)
+-v, --verbose               # Verbose output
+-h, --help                  # Show help message
+```
+
+#### Environment Variables
+```bash
+# Test duration
+export DURATION="10m"
+
+# Target URL
+export BASE_URL="https://www.enuygun.com"
+
+# Think time configuration
+export THINK_TIME_MIN="2"
+export THINK_TIME_MAX="5"
+
+# Request timeout
+export TIMEOUT="30000"
+```
+
+### 📊 Performance Thresholds
+
+#### Response Time Targets
+```javascript
+http_req_duration: [
+  'p(50)<2000',   // 50% of requests under 2s
+  'p(90)<5000',   // 90% of requests under 5s
+  'p(95)<8000',   // 95% of requests under 8s
+]
+```
+
+#### Success Rate Targets
+```javascript
+http_req_failed: ['rate<0.1'],           // Error rate under 10%
+flight_search_success: ['rate>0.8'],    // Search success rate over 80%
+total_requests: ['count>10'],            // Minimum 10 requests
+```
+
+### 📈 Custom Metrics Tracking
+- **Error Rate**: Overall error percentage
+- **Response Time Trend**: Performance tracking over time
+- **Request Counter**: Total requests executed
+- **Flight Search Success Rate**: Specific to flight search functionality
+
+### 📊 Report Generation
+
+#### HTML Reports
+- **File**: `load-test-reports/flight-search-load-test-report.html`
+- **Content**: Interactive graphs, performance metrics, scenario breakdown
+- **Features**: Time series charts, percentile distributions, error analysis
+
+#### JSON Summary
+- **File**: `load-test-reports/flight-search-summary.json`
+- **Content**: Raw metrics data for programmatic analysis
+- **Use Case**: CI/CD integration, automated performance monitoring
+
+#### Console Output
+```
+✓ homepage loads successfully..................: 100.00%
+✓ flight search request successful..............: 85.71%
+✓ flight search response time < 10s............: 100.00%
+✓ listing response time < 5s...................: 95.00%
+
+http_req_duration................: avg=2.1s  p(50)=1.8s p(90)=4.2s p(95)=6.1s
+http_req_failed..................: 5.26%
+flight_search_success............: 85.71%
+total_requests...................: 45
+```
+
+### 🎯 Test Data Configuration
+
+#### Primary Flight Route
+```javascript
+const flightSearchData = {
+  origin: 'IST',        // Istanbul
+  destination: 'ESB',   // Ankara
+  departure_date: '2024-12-15',
+  passenger_count: 1,
+  cabin_class: 'economy',
+};
+```
+
+#### Alternative Routes (for variety)
+- **SAW → ESB**: Istanbul Sabiha Gökçen → Ankara
+- **IST → ADB**: Istanbul → İzmir
+- **Route Selection**: 70% main route, 30% alternatives
+
+### 🛠️ Technical Implementation
+
+#### K6 Script Features
+```javascript
+// Custom metrics
+const errorRate = new Rate('errors');
+const responseTimeTrend = new Trend('response_time');
+const flightSearchSuccessRate = new Rate('flight_search_success');
+
+// Scenario selection with weighted probabilities
+function selectScenario() {
+  const scenarios = [
+    { name: 'homepage_load', weight: 20 },
+    { name: 'flight_search_istanbul_ankara', weight: 60 },
+    { name: 'flight_listing_performance', weight: 20 },
+  ];
+}
+```
+
+#### Error Handling
+- **URLSearchParams Alternative**: Manual query string building for K6 compatibility
+- **Robust Element Detection**: Multiple validation strategies
+- **Detailed Logging**: Step-by-step execution tracking
+- **Graceful Failure**: Comprehensive error reporting
+
+### 🔍 Troubleshooting
+
+#### Common Issues
+```bash
+# K6 not installed
+brew install k6  # macOS
+choco install k6 # Windows
+
+# Permission denied
+chmod +x load-tests/scripts/run-flight-search-load-test.sh
+
+# High error rates
+# Check target URL accessibility and network connectivity
+```
+
+#### Debug Mode
+```bash
+# Verbose K6 execution
+./run-flight-search-load-test.sh -v
+
+# Direct K6 debug
+k6 run --http-debug="full" flight-search-load-test.js
+```
+
+### 📋 Expected Results
+- **Homepage Load**: < 3s response time, 100% success rate
+- **Flight Search**: < 10s completion time, > 80% success rate
+- **Flight Listing**: < 5s page load, content validation pass
+- **Overall Error Rate**: < 10%
+- **Test Duration**: Configurable (default 5 minutes)
+
+### 🎯 Key Performance Indicators (KPIs)
+- ✅ **Response Time P50**: < 2s
+- ✅ **Response Time P90**: < 5s
+- ✅ **Error Rate**: < 10%
+- ✅ **Flight Search Success**: > 80%
+- ✅ **Availability**: > 99%
+
+### Legacy Load Tests
+```bash
+# Run legacy flight load test
+k6 run load-test-flights.js
+
+# Run legacy performance test
+k6 run performance-test.js
+
+# Run with custom parameters
+k6 run -e BASE_URL=https://www.enuygun.com load-test-flights.js
+```
 
 ## 📊 Reports and Results
 
