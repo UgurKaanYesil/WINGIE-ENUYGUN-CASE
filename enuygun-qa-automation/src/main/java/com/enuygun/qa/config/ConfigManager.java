@@ -42,9 +42,9 @@ public class ConfigManager {
         properties.setProperty("browser.headless", "false");
         
         // Default timeout settings
-        properties.setProperty("timeout.default", "10");
-        properties.setProperty("timeout.page.load", "30");
-        properties.setProperty("timeout.implicit", "5");
+        properties.setProperty("timeout.default", "30");
+        properties.setProperty("timeout.page.load", "60");
+        properties.setProperty("timeout.implicit", "10");
         
         // Default URLs
         properties.setProperty("url.base", "https://www.enuygun.com");
@@ -57,6 +57,17 @@ public class ConfigManager {
         
         // Default environment
         properties.setProperty("environment", "dev");
+        
+        // Default test date settings (days from current date)
+        properties.setProperty("test.date.departure.offset", "30");
+        properties.setProperty("test.date.return.offset", "37");
+        properties.setProperty("test.date.format", "dd.MM.yyyy");
+        
+        // Default flight search settings
+        properties.setProperty("flight.search.origin", "Istanbul");
+        properties.setProperty("flight.search.destination", "Ankara");
+        properties.setProperty("flight.filter.time.start", "10:00");
+        properties.setProperty("flight.filter.time.end", "17:00");
         
         logger.info("Default configuration properties set");
     }
@@ -206,5 +217,35 @@ public class ConfigManager {
     public static void printAllProperties() {
         logger.info("Current configuration properties:");
         properties.forEach((key, value) -> logger.info("{} = {}", key, value));
+    }
+    
+    // Test Date Configuration
+    public static int getDepartureDateOffset() {
+        return getIntProperty("test.date.departure.offset", 30);
+    }
+    
+    public static int getReturnDateOffset() {
+        return getIntProperty("test.date.return.offset", 37);
+    }
+    
+    public static String getDateFormat() {
+        return getProperty("test.date.format", "dd.MM.yyyy");
+    }
+    
+    // Flight Search Configuration
+    public static String getFlightOrigin() {
+        return getProperty("flight.search.origin", "Istanbul");
+    }
+    
+    public static String getFlightDestination() {
+        return getProperty("flight.search.destination", "Ankara");
+    }
+    
+    public static String getFlightFilterTimeStart() {
+        return getProperty("flight.filter.time.start", "10:00");
+    }
+    
+    public static String getFlightFilterTimeEnd() {
+        return getProperty("flight.filter.time.end", "17:00");
     }
 }

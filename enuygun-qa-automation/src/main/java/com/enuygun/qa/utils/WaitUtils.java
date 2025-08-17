@@ -178,4 +178,145 @@ public class WaitUtils {
             return false;
         }
     }
+    
+    /**
+     * Custom ExpectedConditions for complex UI interactions
+     */
+    public static class CustomExpectedConditions {
+        
+        /**
+         * Wait for dropdown to appear and be populated with options
+         */
+        public static Function<WebDriver, Boolean> dropdownToBePopulated(By dropdownLocator) {
+            return driver -> {
+                try {
+                    List<WebElement> dropdownElements = driver.findElements(dropdownLocator);
+                    return !dropdownElements.isEmpty() && 
+                           dropdownElements.stream().anyMatch(WebElement::isDisplayed);
+                } catch (Exception e) {
+                    return false;
+                }
+            };
+        }
+        
+        /**
+         * Wait for any element from a list of locators to be visible
+         */
+        public static Function<WebDriver, WebElement> anyElementToBeVisible(By... locators) {
+            return driver -> {
+                for (By locator : locators) {
+                    try {
+                        List<WebElement> elements = driver.findElements(locator);
+                        for (WebElement element : elements) {
+                            if (element.isDisplayed()) {
+                                return element;
+                            }
+                        }
+                    } catch (Exception e) {
+                        // Continue to next locator
+                    }
+                }
+                return null;
+            };
+        }
+        
+        /**
+         * Wait for filter panel to expand/be ready
+         */
+        public static Function<WebDriver, Boolean> filterPanelToBeReady() {
+            return driver -> {
+                try {
+                    // Check for common filter panel indicators
+                    By[] filterIndicators = {
+                        By.cssSelector("input[type='range'], .slider, .range-slider"),
+                        By.cssSelector("input[type='time'], input[placeholder*='saat']"),
+                        By.cssSelector(".filter-content, .expanded, [class*='open']")
+                    };
+                    
+                    for (By locator : filterIndicators) {
+                        List<WebElement> elements = driver.findElements(locator);
+                        if (!elements.isEmpty() && elements.stream().anyMatch(WebElement::isDisplayed)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                } catch (Exception e) {
+                    return false;
+                }
+            };
+        }
+        
+        /**
+         * Wait for page to be fully loaded (no loading indicators)
+         */
+        public static Function<WebDriver, Boolean> pageToBeFullyLoaded() {
+            return driver -> {
+                try {
+                    // Check if any loading indicators are still present
+                    By[] loadingIndicators = {
+                        By.cssSelector(".loading, .spinner, .loader, [class*='loading']"),
+                        By.xpath("//*[contains(@class,'loading') or contains(@class,'spinner')]")
+                    };
+                    
+                    for (By locator : loadingIndicators) {
+                        List<WebElement> loadingElements = driver.findElements(locator);
+                        if (loadingElements.stream().anyMatch(WebElement::isDisplayed)) {
+                            return false; // Still loading
+                        }
+                    }
+                    
+                    // Additional check: JavaScript document ready state
+                    String readyState = (String) ((org.openqa.selenium.JavascriptExecutor) driver)
+                        .executeScript("return document.readyState");
+                    
+                    return "complete".equals(readyState);
+                } catch (Exception e) {
+                    return false;
+                }
+            };
+        }
+    }
+    
+    /**
+     * Convenience methods using custom ExpectedConditions
+     */
+    public static boolean waitForDropdownToBePopulated(WebDriver driver, By dropdownLocator, Duration timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeout);
+            return wait.until(CustomExpectedConditions.dropdownToBePopulated(dropdownLocator));
+        } catch (TimeoutException e) {
+            logger.debug("Timeout waiting for dropdown to be populated: {}", dropdownLocator);
+            return false;
+        }
+    }
+    
+    public static WebElement waitForAnyElementToBeVisible(WebDriver driver, Duration timeout, By... locators) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeout);
+            return wait.until(CustomExpectedConditions.anyElementToBeVisible(locators));
+        } catch (TimeoutException e) {
+            logger.debug("Timeout waiting for any element to be visible from: {}", (Object) locators);
+            return null;
+        }
+    }
+    
+    public static boolean waitForFilterPanelToBeReady(WebDriver driver, Duration timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeout);
+            return wait.until(CustomExpectedConditions.filterPanelToBeReady());
+        } catch (TimeoutException e) {
+            logger.debug("Timeout waiting for filter panel to be ready");
+            return false;
+        }
+    }
+    
+    public static boolean waitForPageToBeFullyLoaded(WebDriver driver, Duration timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeout);
+            return wait.until(CustomExpectedConditions.pageToBeFullyLoaded());
+        } catch (TimeoutException e) {
+            logger.debug("Timeout waiting for page to be fully loaded");
+            return false;
+        }
+    }
 }

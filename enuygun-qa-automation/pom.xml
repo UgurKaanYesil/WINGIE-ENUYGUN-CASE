@@ -101,7 +101,7 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>${json-schema-validator.version}</version>
+            <version>1.3.3</version>
         </dependency>
 
         <!-- CSV Processing -->
@@ -237,6 +237,52 @@
                             <includes>
                                 <include>**/api/**/*Test.java</include>
                             </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Flight Search Test Profile -->
+        <profile>
+            <id>flight-search-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>src/test/resources/testng-flight-search.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <systemPropertyVariables>
+                                <browser>${browser}</browser>
+                                <environment>${environment}</environment>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Cross-Browser Testing Profile -->
+        <profile>
+            <id>cross-browser</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>src/test/resources/testng-flight-search.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <systemPropertyVariables>
+                                <browser>${browser}</browser>
+                                <environment>${environment}</environment>
+                            </systemPropertyVariables>
+                            <parallel>tests</parallel>
+                            <threadCount>2</threadCount>
                         </configuration>
                     </plugin>
                 </plugins>
