@@ -1,0 +1,265 @@
+{
+  "invalidJsonStructures": [
+    {
+      "description": "Malformed JSON - missing closing brace",
+      "data": "{ \"name\": \"TestPet\", \"photoUrls\": [\"http://example.com/photo.jpg\"]"
+    },
+    {
+      "description": "Malformed JSON - trailing comma",
+      "data": "{ \"name\": \"TestPet\", \"photoUrls\": [\"http://example.com/photo.jpg\"], }"
+    },
+    {
+      "description": "Malformed JSON - invalid property syntax",
+      "data": "{ name: \"TestPet\", \"photoUrls\": [\"http://example.com/photo.jpg\"] }"
+    },
+    {
+      "description": "Completely invalid JSON",
+      "data": "this is not json at all"
+    }
+  ],
+  "missingRequiredFields": [
+    {
+      "description": "Missing name field",
+      "data": {
+        "id": 12345,
+        "category": {
+          "id": 1,
+          "name": "Dogs"
+        },
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Missing photoUrls field",
+      "data": {
+        "id": 12346,
+        "name": "TestPet",
+        "category": {
+          "id": 1,
+          "name": "Dogs"
+        },
+        "status": "available"
+      }
+    },
+    {
+      "description": "Empty name field",
+      "data": {
+        "id": 12347,
+        "name": "",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Null name field",
+      "data": {
+        "id": 12348,
+        "name": null,
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Empty photoUrls array",
+      "data": {
+        "id": 12349,
+        "name": "TestPet",
+        "photoUrls": [],
+        "status": "available"
+      }
+    }
+  ],
+  "invalidFieldValues": [
+    {
+      "description": "Invalid status value",
+      "data": {
+        "id": 12350,
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "invalid_status"
+      }
+    },
+    {
+      "description": "Invalid ID type (string instead of number)",
+      "data": {
+        "id": "not_a_number",
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Negative ID value",
+      "data": {
+        "id": -123,
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Invalid category structure (missing required fields)",
+      "data": {
+        "id": 12351,
+        "name": "TestPet",
+        "category": {
+          "name": "Dogs"
+        },
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Invalid tag structure (missing required fields)",
+      "data": {
+        "id": 12352,
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "tags": [
+          {
+            "name": "friendly"
+          }
+        ],
+        "status": "available"
+      }
+    }
+  ],
+  "invalidPhotoUrls": [
+    {
+      "description": "Invalid URL format",
+      "data": {
+        "name": "TestPet",
+        "photoUrls": ["not-a-valid-url"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Empty string URL",
+      "data": {
+        "name": "TestPet",
+        "photoUrls": [""],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Null URL in array",
+      "data": {
+        "name": "TestPet",
+        "photoUrls": [null],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Non-image file extension",
+      "data": {
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/document.pdf"],
+        "status": "available"
+      }
+    }
+  ],
+  "extremeValues": [
+    {
+      "description": "Very long pet name (1000 characters)",
+      "data": {
+        "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Very large ID number",
+      "data": {
+        "id": 9999999999999999999,
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Maximum number of photo URLs (100 URLs)",
+      "data": {
+        "name": "TestPet",
+        "photoUrls": [
+          "http://example.com/photo1.jpg", "http://example.com/photo2.jpg", "http://example.com/photo3.jpg",
+          "http://example.com/photo4.jpg", "http://example.com/photo5.jpg", "http://example.com/photo6.jpg",
+          "http://example.com/photo7.jpg", "http://example.com/photo8.jpg", "http://example.com/photo9.jpg",
+          "http://example.com/photo10.jpg", "http://example.com/photo11.jpg", "http://example.com/photo12.jpg",
+          "http://example.com/photo13.jpg", "http://example.com/photo14.jpg", "http://example.com/photo15.jpg",
+          "http://example.com/photo16.jpg", "http://example.com/photo17.jpg", "http://example.com/photo18.jpg",
+          "http://example.com/photo19.jpg", "http://example.com/photo20.jpg", "http://example.com/photo21.jpg",
+          "http://example.com/photo22.jpg", "http://example.com/photo23.jpg", "http://example.com/photo24.jpg",
+          "http://example.com/photo25.jpg", "http://example.com/photo26.jpg", "http://example.com/photo27.jpg",
+          "http://example.com/photo28.jpg", "http://example.com/photo29.jpg", "http://example.com/photo30.jpg"
+        ],
+        "status": "available"
+      }
+    }
+  ],
+  "unexpectedFields": [
+    {
+      "description": "Pet with additional unexpected fields",
+      "data": {
+        "id": 12353,
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available",
+        "unexpectedField": "This should not be here",
+        "anotherField": 12345,
+        "booleanField": true
+      }
+    }
+  ],
+  "typeValidationErrors": [
+    {
+      "description": "String value for numeric ID",
+      "data": {
+        "id": "12354",
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Array value for string name",
+      "data": {
+        "id": 12355,
+        "name": ["TestPet"],
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": "available"
+      }
+    },
+    {
+      "description": "Object value for string status",
+      "data": {
+        "id": 12356,
+        "name": "TestPet",
+        "photoUrls": ["http://example.com/photo.jpg"],
+        "status": {
+          "value": "available"
+        }
+      }
+    }
+  ],
+  "nonExistentIds": [
+    999999999,
+    888888888,
+    777777777,
+    666666666,
+    555555555
+  ],
+  "invalidStatusValues": [
+    "invalid_status",
+    "AVAILABLE",
+    "Available",
+    "PENDING",
+    "SOLD",
+    "pending_approval",
+    "out_of_stock",
+    "",
+    null,
+    123,
+    true
+  ]
+}

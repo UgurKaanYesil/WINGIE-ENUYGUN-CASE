@@ -288,5 +288,28 @@
                 </plugins>
             </build>
         </profile>
+
+        <!-- Petstore API Tests Profile -->
+        <profile>
+            <id>petstore-api-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>src/test/resources/testng-petstore-api.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <systemPropertyVariables>
+                                <environment>${environment}</environment>
+                            </systemPropertyVariables>
+                            <parallel>classes</parallel>
+                            <threadCount>3</threadCount>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>

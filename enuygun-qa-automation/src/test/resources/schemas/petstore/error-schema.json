@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "API Error Schema",
+  "description": "JSON Schema for validating API error responses",
+  "required": [
+    "code",
+    "type",
+    "message"
+  ],
+  "properties": {
+    "code": {
+      "type": "integer",
+      "description": "Error code",
+      "minimum": 100,
+      "maximum": 599
+    },
+    "type": {
+      "type": "string",
+      "description": "Error type",
+      "minLength": 1,
+      "maxLength": 100,
+      "enum": [
+        "error",
+        "validation_error",
+        "not_found",
+        "bad_request",
+        "unauthorized",
+        "forbidden",
+        "internal_server_error",
+        "service_unavailable"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "description": "Error message",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "details": {
+      "type": "string",
+      "description": "Additional error details",
+      "maxLength": 1000
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "Error timestamp",
+      "format": "date-time"
+    },
+    "path": {
+      "type": "string",
+      "description": "API endpoint path where error occurred",
+      "pattern": "^/.*"
+    }
+  },
+  "additionalProperties": false
+}
