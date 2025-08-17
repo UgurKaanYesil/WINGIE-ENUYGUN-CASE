@@ -1,0 +1,160 @@
+{
+  "environments": {
+    "production": {
+      "baseUrl": "https://www.enuygun.com",
+      "apiBaseUrl": "https://api.enuygun.com",
+      "timeout": 30000,
+      "thinkTime": {
+        "min": 2,
+        "max": 5
+      }
+    },
+    "staging": {
+      "baseUrl": "https://staging.enuygun.com",
+      "apiBaseUrl": "https://api-staging.enuygun.com",
+      "timeout": 45000,
+      "thinkTime": {
+        "min": 1,
+        "max": 3
+      }
+    },
+    "dev": {
+      "baseUrl": "https://dev.enuygun.com",
+      "apiBaseUrl": "https://api-dev.enuygun.com",
+      "timeout": 60000,
+      "thinkTime": {
+        "min": 1,
+        "max": 2
+      }
+    }
+  },
+  "testScenarios": {
+    "flightSearchBasic": {
+      "virtualUsers": 1,
+      "duration": "5m",
+      "description": "Basic flight search load test with 1 virtual user",
+      "scenarios": [
+        {
+          "name": "homepage_load",
+          "weight": 20,
+          "description": "Test homepage loading performance"
+        },
+        {
+          "name": "flight_search_istanbul_ankara",
+          "weight": 60,
+          "description": "Main Istanbul-Ankara flight search scenario"
+        },
+        {
+          "name": "flight_listing_performance",
+          "weight": 20,
+          "description": "Test flight listing page performance"
+        }
+      ]
+    },
+    "flightSearchStress": {
+      "virtualUsers": 10,
+      "duration": "10m",
+      "description": "Stress test with multiple virtual users",
+      "rampUp": "2m",
+      "rampDown": "1m"
+    },
+    "flightSearchSpike": {
+      "virtualUsers": 50,
+      "duration": "2m",
+      "description": "Spike test with sudden load increase",
+      "spikeDuration": "30s"
+    }
+  },
+  "testData": {
+    "flightRoutes": [
+      {
+        "origin": "IST",
+        "destination": "ESB",
+        "originName": "Istanbul",
+        "destinationName": "Ankara",
+        "priority": "high",
+        "description": "Primary test route"
+      },
+      {
+        "origin": "SAW",
+        "destination": "ESB",
+        "originName": "Istanbul Sabiha Gokcen",
+        "destinationName": "Ankara",
+        "priority": "medium"
+      },
+      {
+        "origin": "IST",
+        "destination": "ADB",
+        "originName": "Istanbul",
+        "destinationName": "Izmir",
+        "priority": "medium"
+      },
+      {
+        "origin": "ESB",
+        "destination": "IST",
+        "originName": "Ankara",
+        "destinationName": "Istanbul",
+        "priority": "medium"
+      }
+    ],
+    "dates": [
+      "2024-12-15",
+      "2024-12-20",
+      "2024-12-25",
+      "2024-12-30",
+      "2025-01-05",
+      "2025-01-10"
+    ],
+    "passengers": [1, 2, 3, 4],
+    "cabinClasses": ["economy", "business", "first"]
+  },
+  "thresholds": {
+    "performance": {
+      "homepage_load_time_p50": 2000,
+      "homepage_load_time_p90": 5000,
+      "homepage_load_time_p95": 8000,
+      "flight_search_time_p50": 3000,
+      "flight_search_time_p90": 8000,
+      "flight_search_time_p95": 12000,
+      "listing_load_time_p50": 2000,
+      "listing_load_time_p90": 5000
+    },
+    "reliability": {
+      "error_rate_max": 0.1,
+      "flight_search_success_rate_min": 0.8,
+      "availability_min": 0.99
+    },
+    "volume": {
+      "min_requests_per_test": 10,
+      "max_requests_per_second": 100
+    }
+  },
+  "reporting": {
+    "outputFormats": ["html", "json", "csv"],
+    "metricsToTrack": [
+      "http_req_duration",
+      "http_req_failed",
+      "http_reqs",
+      "vus",
+      "vus_max",
+      "data_received",
+      "data_sent",
+      "iteration_duration",
+      "iterations"
+    ],
+    "customMetrics": [
+      "errors",
+      "response_time",
+      "total_requests",
+      "flight_search_success"
+    ]
+  },
+  "monitoring": {
+    "realTimeMetrics": true,
+    "alerting": {
+      "errorRateThreshold": 0.15,
+      "responseTimeThreshold": 10000,
+      "availabilityThreshold": 0.95
+    }
+  }
+}
