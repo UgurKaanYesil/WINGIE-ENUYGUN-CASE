@@ -1,6 +1,7 @@
 package com.enuygun.qa.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -208,7 +209,7 @@ public abstract class BasePage {
 
     protected void scrollToElement(WebElement element) {
         try {
-            driver.execute("arguments[0].scrollIntoView(true);", element);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
             logger.debug("Scrolled to element");
         } catch (Exception e) {
             logger.error("Failed to scroll to element", e);
