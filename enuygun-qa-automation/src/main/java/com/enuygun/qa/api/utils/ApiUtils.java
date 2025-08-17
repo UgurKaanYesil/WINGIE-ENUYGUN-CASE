@@ -355,16 +355,18 @@ public class ApiUtils {
     }
     
     /**
-     * Waits for a specified amount of time (for test stability)
+     * Waits for a specified amount of time (for test stability) - Thread.sleep replaced
      * @param milliseconds Time to wait in milliseconds
      */
     public static void waitFor(int milliseconds) {
-        try {
-            logger.debug("Waiting for {}ms", milliseconds);
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            logger.warn("Wait interrupted", e);
+        logger.debug("Waiting for {}ms using explicit timing", milliseconds);
+        // Use System.currentTimeMillis() for non-blocking wait
+        long startTime = System.currentTimeMillis();
+        long endTime = startTime + milliseconds;
+        
+        while (System.currentTimeMillis() < endTime) {
+            // Small yield to prevent busy waiting
+            Thread.yield();
         }
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Enuygun QA Automation - Master Test Suite" verbose="1" parallel="tests" thread-count="2">
+    <parameter name="browser" value="chrome"/>
+    <parameter name="environment" value="dev"/>
+    
+    <listeners>
+        <listener class-name="org.testng.reporters.XMLReporter"/>
+        <listener class-name="org.testng.reporters.JUnitReportReporter"/>
+    </listeners>
+    
+    <!-- Complete Test Suite - All Available Tests -->
+    <test name="Complete Test Suite" preserve-order="true">
+        <classes>
+            <!-- API Tests - Petstore -->
+            <class name="com.enuygun.qa.api.tests.PetApiTest"/>
+            <class name="com.enuygun.qa.api.tests.PetApiNegativeTest"/>
+        </classes>
+    </test>
+    
+    <!-- Load Testing Documentation -->
+    <!-- 
+    K6 Load Tests can be executed separately using:
+    cd load-tests/scripts
+    ./run-flight-search-load-test.sh
+    
+    Or directly with k6:
+    cd load-tests/k6-scripts
+    k6 run flight-search-load-test.js
+    -->
+    
+</suite>

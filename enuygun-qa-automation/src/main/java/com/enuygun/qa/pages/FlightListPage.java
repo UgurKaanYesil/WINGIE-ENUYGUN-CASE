@@ -1590,7 +1590,7 @@ public class FlightListPage extends BasePage {
                     "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", 
                     timeFilterElement);
                 logger.info("Successfully scrolled to time filter element");
-                Thread.sleep(1500); // Wait for smooth scroll animation
+                WaitUtils.waitForSeconds(driver, 2); // Wait for smooth scroll animation
                 return;
             } catch (Exception e) {
                 logger.debug("Could not scroll to specific time filter element: {}", e.getMessage());
@@ -1611,7 +1611,7 @@ public class FlightListPage extends BasePage {
                                 "arguments[0].scrollTop = arguments[0].scrollHeight / 2;", 
                                 filterPanel);
                             logger.info("Scrolled within filter panel using selector: {}", selector);
-                            Thread.sleep(1000);
+                            WaitUtils.waitForSeconds(driver, 1);
                             return;
                         }
                     } catch (Exception ignored) {
@@ -1627,7 +1627,7 @@ public class FlightListPage extends BasePage {
                 ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(
                     "window.scrollBy(0, 300);"); // Scroll down 300px
                 logger.info("Applied general page scroll down");
-                Thread.sleep(1000);
+                WaitUtils.waitForSeconds(driver, 1);
             } catch (Exception e) {
                 logger.debug("General page scroll failed: {}", e.getMessage());
             }
@@ -1747,7 +1747,7 @@ public class FlightListPage extends BasePage {
                             "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", 
                             slider);
                         logger.info("Scrolled to slider element using selector: {}", selector);
-                        Thread.sleep(1000);
+                        WaitUtils.waitForSeconds(driver, 1);
                         return;
                     }
                 } catch (Exception ignored) {

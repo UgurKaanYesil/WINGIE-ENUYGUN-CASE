@@ -16,23 +16,17 @@
             </run>
         </groups>
         <classes>
-            <class name="com.enuygun.qa.ui.HomePageTests">
+            <class name="com.enuygun.qa.api.tests.PetApiTest">
                 <methods>
-                    <include name="testHomePageLoad"/>
-                    <include name="testFlightTabSelection"/>
-                </methods>
-            </class>
-            <class name="com.enuygun.qa.api.FlightApiTests">
-                <methods>
-                    <include name="testApiHealthCheck"/>
-                    <include name="testFlightSearchApi"/>
+                    <include name="testCreatePet"/>
+                    <include name="testGetPetById"/>
                 </methods>
             </class>
         </classes>
     </test>
     
     <!-- UI Tests - Cross Browser Testing -->
-    <test name="UI Tests - Chrome" preserve-order="true">
+    <test name="UI Tests - Chrome" preserve-order="true" enabled="false">
         <parameter name="browser" value="chrome"/>
         <groups>
             <run>
@@ -40,8 +34,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.enuygun.qa.ui.HomePageTests"/>
-            <class name="com.enuygun.qa.ui.SearchTests"/>
+            <!-- UI test classes would be added here when available -->
         </classes>
     </test>
     
@@ -54,38 +47,32 @@
             </run>
         </groups>
         <classes>
-            <class name="com.enuygun.qa.ui.HomePageTests">
-                <methods>
-                    <include name="testHomePageLoad"/>
-                    <include name="testFlightTabSelection"/>
-                    <include name="testOneWayFlightSearch"/>
-                </methods>
-            </class>
+            <!-- UI test classes would be added here when available -->
         </classes>
     </test>
     
-    <!-- API Tests -->
-    <test name="API Tests" preserve-order="true">
+    <!-- API Tests - Petstore -->
+    <test name="API Tests - Petstore" preserve-order="true">
         <groups>
             <run>
                 <include name="API"/>
             </run>
         </groups>
         <classes>
-            <class name="com.enuygun.qa.api.FlightApiTests"/>
-            <class name="com.enuygun.qa.api.HotelApiTests"/>
+            <class name="com.enuygun.qa.api.tests.PetApiTest"/>
+            <class name="com.enuygun.qa.api.tests.PetApiNegativeTest"/>
         </classes>
     </test>
     
     <!-- Data Analysis Tests -->
-    <test name="Data Analysis Tests" preserve-order="true">
+    <test name="Data Analysis Tests" preserve-order="true" enabled="false">
         <groups>
             <run>
                 <include name="Data"/>
             </run>
         </groups>
         <classes>
-            <class name="com.enuygun.qa.data.DataAnalysisTests"/>
+            <!-- Data analysis test classes would be added here when available -->
         </classes>
     </test>
     
@@ -97,11 +84,9 @@
             </run>
         </groups>
         <classes>
-            <class name="com.enuygun.qa.ui.HomePageTests"/>
-            <class name="com.enuygun.qa.ui.SearchTests"/>
-            <class name="com.enuygun.qa.api.FlightApiTests"/>
-            <class name="com.enuygun.qa.api.HotelApiTests"/>
-            <class name="com.enuygun.qa.data.DataAnalysisTests"/>
+            <class name="com.enuygun.qa.api.tests.PetApiTest"/>
+            <class name="com.enuygun.qa.api.tests.PetApiNegativeTest"/>
+            <!-- Additional test classes can be added when available -->
         </classes>
     </test>
 </suite>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Cross-Browser Test Suite" verbose="1" parallel="tests" thread-count="2">
+    <parameter name="environment" value="dev"/>
+    
+    <listeners>
+        <listener class-name="org.testng.reporters.XMLReporter"/>
+        <listener class-name="org.testng.reporters.JUnitReportReporter"/>
+    </listeners>
+    
+    <!-- Chrome Browser Tests -->
+    <test name="Chrome Browser Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <!-- API tests don't require browser but included for completeness -->
+            <class name="com.enuygun.qa.api.tests.PetApiTest">
+                <methods>
+                    <include name="testCreatePet"/>
+                    <include name="testGetPetById"/>
+                    <include name="testDeletePet"/>
+                </methods>
+            </class>
+            <!-- UI test classes would be added here when available -->
+        </classes>
+    </test>
+    
+    <!-- Firefox Browser Tests -->
+    <test name="Firefox Browser Tests" preserve-order="true" enabled="false">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <!-- API tests for Firefox environment -->
+            <class name="com.enuygun.qa.api.tests.PetApiTest">
+                <methods>
+                    <include name="testCreatePet"/>
+                    <include name="testGetPetById"/>
+                    <include name="testDeletePet"/>
+                </methods>
+            </class>
+            <!-- UI test classes would be added here when available -->
+        </classes>
+    </test>
+    
+    <!-- Edge Browser Tests (Future) -->
+    <test name="Edge Browser Tests" preserve-order="true" enabled="false">
+        <parameter name="browser" value="edge"/>
+        <classes>
+            <!-- Future Edge browser support -->
+        </classes>
+    </test>
+    
+</suite>

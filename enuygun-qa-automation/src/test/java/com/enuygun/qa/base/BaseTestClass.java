@@ -269,12 +269,8 @@ public class BaseTestClass {
                 logger.warn("Attempt {} failed for action '{}': {}", attempt, actionDescription, e.getMessage());
                 
                 if (attempt < maxRetries) {
-                    try {
-                        Thread.sleep(1000); // Wait before retry
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
+                    // Use explicit wait instead of Thread.sleep
+                    WaitUtils.waitForSeconds(driver, 1);
                 }
             }
         }
