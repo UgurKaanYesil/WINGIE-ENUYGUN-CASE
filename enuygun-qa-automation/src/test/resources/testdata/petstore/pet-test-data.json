@@ -1,0 +1,272 @@
+{
+  "validPets": [
+    {
+      "id": 1001,
+      "category": {
+        "id": 1,
+        "name": "Dogs"
+      },
+      "name": "Golden_Retriever_Max",
+      "photoUrls": [
+        "https://example.com/dogs/golden-retriever-1.jpg",
+        "https://example.com/dogs/golden-retriever-2.jpg"
+      ],
+      "tags": [
+        {
+          "id": 1,
+          "name": "friendly"
+        },
+        {
+          "id": 2,
+          "name": "playful"
+        },
+        {
+          "id": 6,
+          "name": "loyal"
+        }
+      ],
+      "status": "available"
+    },
+    {
+      "id": 1002,
+      "category": {
+        "id": 2,
+        "name": "Cats"
+      },
+      "name": "Persian_Luna",
+      "photoUrls": [
+        "https://example.com/cats/persian-cat-1.jpg"
+      ],
+      "tags": [
+        {
+          "id": 5,
+          "name": "calm"
+        },
+        {
+          "id": 8,
+          "name": "affectionate"
+        }
+      ],
+      "status": "available"
+    },
+    {
+      "id": 1003,
+      "category": {
+        "id": 3,
+        "name": "Birds"
+      },
+      "name": "Parrot_Charlie",
+      "photoUrls": [
+        "https://example.com/birds/parrot-1.jpg",
+        "https://example.com/birds/parrot-2.jpg",
+        "https://example.com/birds/parrot-3.jpg"
+      ],
+      "tags": [
+        {
+          "id": 7,
+          "name": "intelligent"
+        },
+        {
+          "id": 2,
+          "name": "playful"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 1004,
+      "category": {
+        "id": 1,
+        "name": "Dogs"
+      },
+      "name": "Bulldog_Rocky",
+      "photoUrls": [
+        "https://example.com/dogs/bulldog-1.jpg"
+      ],
+      "tags": [
+        {
+          "id": 3,
+          "name": "gentle"
+        },
+        {
+          "id": 6,
+          "name": "loyal"
+        }
+      ],
+      "status": "sold"
+    },
+    {
+      "id": 1005,
+      "category": {
+        "id": 4,
+        "name": "Fish"
+      },
+      "name": "Goldfish_Nemo",
+      "photoUrls": [
+        "https://example.com/fish/goldfish-1.jpg"
+      ],
+      "tags": [
+        {
+          "id": 5,
+          "name": "calm"
+        }
+      ],
+      "status": "available"
+    }
+  ],
+  "minimalValidPets": [
+    {
+      "name": "MinimalPet_1",
+      "photoUrls": [
+        "https://example.com/minimal/pet-1.jpg"
+      ]
+    },
+    {
+      "name": "MinimalPet_2",
+      "photoUrls": [
+        "https://example.com/minimal/pet-2.jpg",
+        "https://example.com/minimal/pet-2-alt.jpg"
+      ]
+    }
+  ],
+  "petUpdates": [
+    {
+      "originalData": {
+        "id": 1001,
+        "name": "Golden_Retriever_Max",
+        "status": "available"
+      },
+      "updatedData": {
+        "id": 1001,
+        "category": {
+          "id": 1,
+          "name": "Dogs"
+        },
+        "name": "Golden_Retriever_Max_Updated",
+        "photoUrls": [
+          "https://example.com/dogs/golden-retriever-updated.jpg"
+        ],
+        "tags": [
+          {
+            "id": 1,
+            "name": "friendly"
+          },
+          {
+            "id": 3,
+            "name": "gentle"
+          }
+        ],
+        "status": "pending"
+      }
+    }
+  ],
+  "petsByStatus": {
+    "available": [
+      "Golden_Retriever_Max",
+      "Persian_Luna",
+      "Goldfish_Nemo"
+    ],
+    "pending": [
+      "Parrot_Charlie"
+    ],
+    "sold": [
+      "Bulldog_Rocky"
+    ]
+  },
+  "petsByTags": {
+    "friendly": [
+      "Golden_Retriever_Max"
+    ],
+    "calm": [
+      "Persian_Luna",
+      "Goldfish_Nemo"
+    ],
+    "playful": [
+      "Golden_Retriever_Max",
+      "Parrot_Charlie"
+    ],
+    "loyal": [
+      "Golden_Retriever_Max",
+      "Bulldog_Rocky"
+    ]
+  },
+  "categories": [
+    {
+      "id": 1,
+      "name": "Dogs"
+    },
+    {
+      "id": 2,
+      "name": "Cats"
+    },
+    {
+      "id": 3,
+      "name": "Birds"
+    },
+    {
+      "id": 4,
+      "name": "Fish"
+    },
+    {
+      "id": 5,
+      "name": "Reptiles"
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "friendly"
+    },
+    {
+      "id": 2,
+      "name": "playful"
+    },
+    {
+      "id": 3,
+      "name": "gentle"
+    },
+    {
+      "id": 4,
+      "name": "energetic"
+    },
+    {
+      "id": 5,
+      "name": "calm"
+    },
+    {
+      "id": 6,
+      "name": "loyal"
+    },
+    {
+      "id": 7,
+      "name": "intelligent"
+    },
+    {
+      "id": 8,
+      "name": "affectionate"
+    }
+  ],
+  "photoUrls": {
+    "dogs": [
+      "https://example.com/dogs/golden-retriever-1.jpg",
+      "https://example.com/dogs/golden-retriever-2.jpg",
+      "https://example.com/dogs/bulldog-1.jpg",
+      "https://example.com/dogs/labrador-1.jpg",
+      "https://example.com/dogs/german-shepherd-1.jpg"
+    ],
+    "cats": [
+      "https://example.com/cats/persian-cat-1.jpg",
+      "https://example.com/cats/siamese-cat-1.jpg",
+      "https://example.com/cats/maine-coon-1.jpg"
+    ],
+    "birds": [
+      "https://example.com/birds/parrot-1.jpg",
+      "https://example.com/birds/parrot-2.jpg",
+      "https://example.com/birds/canary-1.jpg"
+    ],
+    "fish": [
+      "https://example.com/fish/goldfish-1.jpg",
+      "https://example.com/fish/betta-1.jpg"
+    ]
+  }
+}

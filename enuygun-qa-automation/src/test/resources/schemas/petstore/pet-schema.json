@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Pet Schema",
+  "description": "JSON Schema for validating Pet API responses",
+  "required": [
+    "id",
+    "name",
+    "photoUrls"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Pet ID",
+      "minimum": 1
+    },
+    "category": {
+      "type": "object",
+      "description": "Category that the pet belongs to",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Category ID",
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "description": "Category name",
+          "minLength": 1,
+          "maxLength": 50
+        }
+      },
+      "required": ["id", "name"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Pet name",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[a-zA-Z0-9\\s_-]+$"
+    },
+    "photoUrls": {
+      "type": "array",
+      "description": "Array of photo URLs for the pet",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri",
+        "description": "Photo URL",
+        "pattern": "^https?://.*\\.(jpg|jpeg|png|gif|webp)$"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Array of tags for the pet",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Tag ID",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Tag name",
+            "minLength": 1,
+            "maxLength": 50,
+            "pattern": "^[a-zA-Z0-9\\s_-]+$"
+          }
+        },
+        "required": ["id", "name"]
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Pet status in the store",
+      "enum": ["available", "pending", "sold"]
+    }
+  },
+  "additionalProperties": false
+}
