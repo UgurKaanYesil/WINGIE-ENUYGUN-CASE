@@ -1,4 +1,4 @@
-# Enuygun QA Automation Framework
+readme.# Enuygun QA Automation Framework
 
 A comprehensive test automation framework for Enuygun.com featuring UI automation, API testing, load testing, and data analysis capabilities.
 
@@ -189,6 +189,118 @@ mvn test -Dgroups="Regression"
 
 # Run specific test categories
 mvn test -Dgroups="UI,API"
+```
+
+## 🎯 Flight Search Time Filter Test Scenario
+
+### Overview
+A comprehensive end-to-end test scenario that validates flight search functionality with time filtering capabilities. This test demonstrates advanced automation techniques including dynamic element handling, time filter validation, and comprehensive result verification.
+
+### Test Scenario Details
+- **Route**: Istanbul to Ankara (round-trip)
+- **Time Filter**: 10:00-17:00 (using "Öğle" button)
+- **Validation**: All displayed flights must be within the specified time range
+- **Technology**: Selenium WebDriver with Page Object Model
+
+### Key Features
+- ✅ **Robust City Selection**: Multiple fallback strategies for dropdown interactions
+- ✅ **Smart Date Handling**: Calendar navigation with dynamic date selection
+- ✅ **Time Filter Validation**: Comprehensive flight time range verification
+- ✅ **Enhanced Error Handling**: Detailed logging and screenshot capture
+- ✅ **Öğle Button Support**: Simplified time filtering (10:00-17:00)
+
+### Running the Flight Search Test
+
+#### Quick Execution
+```bash
+# Run the specific flight search test
+mvn test -Dtest=FlightSearchBasicTest#testBasicFlightSearchWithTimeFilter
+
+# Run using the dedicated test runner script
+./run-flight-search-tests.sh
+
+# Run with custom browser
+./run-flight-search-tests.sh chrome
+
+# Run with specific test configuration
+mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng-flight-search.xml
+```
+
+#### Test Configuration Options
+```bash
+# Run with different time ranges (via ConfigManager)
+mvn test -Dtest=FlightSearchBasicTest -Dflight.filter.time.start=10:00 -Dflight.filter.time.end=17:00
+
+# Run with different routes
+mvn test -Dtest=FlightSearchBasicTest -Dflight.origin=Istanbul -Dflight.destination=Ankara
+
+# Run in headless mode for CI/CD
+mvn test -Dtest=FlightSearchBasicTest -Dbrowser.headless=true
+```
+
+### Test Files Structure
+```
+src/
+├── main/java/com/enuygun/qa/
+│   └── pages/
+│       ├── HomePage.java              # Enhanced with flight search functionality
+│       └── FlightListPage.java        # New: Flight results and time filter handling
+├── test/java/com/enuygun/qa/ui/
+│   └── FlightSearchBasicTest.java     # Main test implementation
+└── test/resources/
+    └── testng-flight-search.xml       # TestNG configuration for flight tests
+
+run-flight-search-tests.sh             # Dedicated test runner script
+test-data/flight-search-test-data.csv  # Test data for parametric testing
+FLIGHT-SEARCH-TESTS.md                 # Detailed test documentation
+```
+
+### Validation Features
+
+#### Comprehensive Time Validation
+```java
+// The test validates that ALL flights are within the specified time range
+validateAllFlightsInTimeRange("10:00", "17:00")
+
+// Detailed logging for each flight validation
+✅ Flight #1: 11:45 is within range 10:00-17:00
+✅ Flight #2: 14:30 is within range 10:00-17:00
+❌ Flight #3: 18:15 is OUTSIDE range 10:00-17:00
+```
+
+#### Enhanced Error Handling
+- **Smart Element Detection**: Multiple locator strategies with fallbacks
+- **Automatic Screenshots**: Captured on any failure for debugging
+- **Detailed Logging**: Step-by-step execution tracking
+- **Thread.sleep Elimination**: Uses only explicit waits for stability
+
+#### Test Execution Flow
+1. **🏠 Navigate to Enuygun homepage**
+2. **✈️ Select flight tab and round-trip option**
+3. **🏙️ Enter origin city (Istanbul) with dropdown selection**
+4. **🎯 Enter destination city (Ankara) with dropdown selection**
+5. **📅 Select departure and return dates**
+6. **🔍 Click search and wait for results**
+7. **⏰ Apply time filter using "Öğle" button (10:00-17:00)**
+8. **✅ Validate ALL flights are within the specified time range**
+9. **📊 Generate comprehensive test report**
+
+### Expected Results
+- **Flight List Display**: Successfully loads flight results page
+- **Time Filter Application**: "Öğle" button successfully applies 10:00-17:00 filter
+- **Validation Success**: All displayed flights have departure times between 10:00-17:00
+- **Test Completion**: Detailed logs show comprehensive validation execution
+
+### Troubleshooting
+```bash
+# If city selection fails
+# Check logs for dropdown detection issues, multiple fallback strategies will be attempted
+
+# If time filter doesn't apply
+# Verify "Öğle" button visibility, test includes scroll functionality for better element access
+
+# If validation fails
+# Check flight element detection, multiple selectors are used for robust element finding
 ```
 
 ### Cross-Browser Testing
