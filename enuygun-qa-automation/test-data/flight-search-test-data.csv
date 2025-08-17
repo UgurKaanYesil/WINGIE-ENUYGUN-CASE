@@ -1,0 +1,11 @@
+origin,destination,departureDate,returnDate,filterStartTime,filterEndTime,testCategory,description
+Istanbul,Ankara,30,37,10:00,18:00,smoke,Basic Istanbul to Ankara flight search with business hours filter
+İstanbul,Ankara,45,52,09:00,17:00,regression,Turkish characters test with morning to evening filter
+Istanbul,Ankara,60,67,12:00,20:00,regression,Afternoon to evening time range
+Istanbul,İzmir,30,37,08:00,12:00,regression,Istanbul to Izmir morning flights
+Ankara,Istanbul,35,42,14:00,22:00,regression,Reverse route afternoon to night
+İstanbul,İzmir,40,47,06:00,10:00,regression,Early morning flights with Turkish characters
+Istanbul,Antalya,50,57,16:00,23:00,regression,Evening and night flights to touristic destination
+Ankara,İzmir,30,37,10:00,18:00,regression,Domestic route with standard business hours
+Istanbul,Bursa,25,32,11:00,15:00,smoke,Short distance domestic flight midday
+İstanbul,Trabzon,35,42,07:00,11:00,regression,Black Sea region morning flights
